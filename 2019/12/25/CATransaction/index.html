@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> CATransaction · Hexo</title><meta name="description" content="CATransaction - arderbud"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://yoursite.com/atom.xml" title="Hexo"><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/sunchongsheng" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/pinggod" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">CATransaction</h1><div class="post-info">Dec 25, 2019</div><div class="post-content"><h2 id="CATransaction"><a href="#CATransaction" class="headerlink" title="CATransaction"></a>CATransaction</h2><h4 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h4><ul>
+<li><code>CATransaction</code>is unique in thread.</li>
+<li>Implicit transaction is only uesd when there is no  active transaction while change the layer tree.</li>
+<li><code>CATransaction</code>capture layer tree changes  just  by mark the root layer.</li>
+</ul>
+<h4 id="Topics"><a href="#Topics" class="headerlink" title="Topics"></a>Topics</h4><ul>
+<li><code>+[CATransaction begin]</code>    just add 1 in specific var.</li>
+<li>Change layer tree. </li>
+<li><code>+[CATransaction commit]</code> sub 1 in specific var. if var is 0, then commit actally. Ensure nested transaction are commited completely.</li>
+</ul>
+<h4 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h4><p>Change the layer follows 3 step.</p>
+<ol>
+<li><p>CA::Layer::begin_change(CA::Transaction*,unsigned int,objc_object*&amp;)</p>
+<ul>
+<li>call <code>CA::Transaction::ensure_implicit()</code> make sure that add an implicit transaction if there is no active transaction.</li>
+<li>call <code>-[CALayer actionForkKey:]</code>,find the CAAnimation correspond with the property. Store it to objc_object*&amp;.</li>
+</ul>
+</li>
+<li><p>Change property.</p>
+</li>
+<li><p>CA::Layer::end_change(CA::Transaction<em>,unsigned int,,objc_object\</em>&amp;),</p>
+<ul>
+<li><p>call <code>CA::Transaction::add_root()</code> mark the root layer of  the updated layer tree</p>
+</li>
+<li><p>call <code>CA::Layer::add_animation()</code> set CATransaction values to the animation(like duration,timingFunction.just guess.)</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>   ​       </p>
+<p>​    </p>
+</div></article></div></main><footer><div class="paginator"></div><div class="copyright"><p>© 2015 - 2019 <a href="http://yoursite.com">arderbud</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script></body></html>
