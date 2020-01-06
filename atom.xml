@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-12-25T09:55:43.935Z</updated>
+  <updated>2020-01-03T12:34:26.593Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>dyld overview</title>
+    <link href="http://yoursite.com/2020/01/03/dyld%20overview/"/>
+    <id>http://yoursite.com/2020/01/03/dyld%20overview/</id>
+    <published>2020-01-03T09:37:38.378Z</published>
+    <updated>2020-01-03T12:34:26.593Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="dyld-overview"><a href="#dyld-overview" class="headerlink" title="dyld overview"></a>dyld overview</h2><p>I just try to overview the dyld for that developers who has difficult to read dyld opensource. Let’s start.</p><h4 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h4><p>For iOS app developers you should know that when we write an app,we need  normally depend on a lots of dynamic frameworks.Those framework do not packeted in our app, they are in system directory some where.How our code can find them, use them? This is the work that dyld should to do.</p><h4 id="User-space"><a href="#User-space" class="headerlink" title="User space"></a>User space</h4><p>When we tap an app icon,then an app is started.App is a process.It has owned user space . </p><p>What is user space? If you don’t know  clearly,you can just consider it as data address. Assume code <code>int i =3; int *p = &amp;i</code>in c langurage ,p is the address of var i.</p><p>The code where  we write app to,and the dynamic framework we denpening on,They are all in the user space.Like figure 1-1</p><p>Figure 1-1</p><img src="https://s2.ax1x.com/2020/01/03/larzGj.png" alt="larzGj.png" style="zoom:50%;" /><p>You can set <code>DYLD_PRINT_SEGMENTS</code> environment variables to see dyld logs in case deepen the impression. Also user <code>image list</code>lldb instrument  to debug.</p><h4 id="Symbol-bind"><a href="#Symbol-bind" class="headerlink" title="Symbol bind"></a>Symbol bind</h4><p>Now,we have knowed  all the addresses of dynamic framework we depend on.Then we can bind symbol.</p><p>What is symbol bind?For example, assume  code <code>Class cls = [NSObjcet class];</code>,we use the <code>+[NSObject class]</code>method.When we write code, we donnot know the the address of <code>+[NSObject class]</code>method.We can use a placeholer for the method, like figure 1-2.</p><p>Figure 1-2.</p><img src="https://s2.ax1x.com/2020/01/03/larxiQ.png" alt="larxiQ.png" style="zoom: 50%;" /><p>But now we know the actual address,the we can fill in it.Assume the address of method <code>+[NSObject class]</code> is 0x7fffad1bf140,After fill in,like figure 1-3</p><p>Figure 1-3</p><img src="https://s2.ax1x.com/2020/01/03/layKhQ.png" alt="layKhQ.png"  /><p>This is so-called <code>bind</code>.</p><p><strong>So far,the dyld’s main work is done.</strong></p><h4 id="One-more-thing"><a href="#One-more-thing" class="headerlink" title="One more thing"></a>One more thing</h4><p>If you read the dyld opensource,you can’t go around the <code>dyld_shared_cache</code>，<code>imageLoader</code>,what are they? I just apply a figure 1-4,leave the rest to you.</p><p>Figure 1-4.</p><p><img src="https://s2.ax1x.com/2020/01/03/laTAPI.png" alt="laTAPI.png"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;dyld-overview&quot;&gt;&lt;a href=&quot;#dyld-overview&quot; class=&quot;headerlink&quot; title=&quot;dyld overview&quot;&gt;&lt;/a&gt;dyld overview&lt;/h2&gt;&lt;p&gt;I just try to overview the
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>CATransaction</title>
