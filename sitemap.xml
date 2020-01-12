@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2020/01/12/stub&lazy%20bind/</loc>
+    
+    <lastmod>2020-01-12T09:08:28.836Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2020/01/03/dyld%20overview/</loc>
     
     <lastmod>2020-01-03T12:34:26.593Z</lastmod>
